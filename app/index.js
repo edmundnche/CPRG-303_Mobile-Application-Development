@@ -1,17 +1,25 @@
 import { StyleSheet, Text, View } from "react-native";
-import App from "../App";
+import { useState } from "react";
 import ToDoForm from "../ToDoForm";
 import ToDoList from "../ToDoList";
 
-
 export default function Page() {
+
+  const [tasks, setTasks] = useState(['Do laundry', 'Go to gym', 'Walk dog']);
+
+  const addTask = (task) => {
+    if (!tasks.includes(task) && task.trim() !== '') { // Prevent duplicates and empty tasks
+      setTasks([...tasks, task]);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.main}>
         <Text style={styles.title}>Hello World</Text>
         <Text style={styles.subtitle}>This is the first page of your app.</Text>
-        <ToDoList />
-        <ToDoForm />
+        <ToDoList tasks={tasks} />
+        <ToDoForm addTask={addTask} />
       </View>
     </View>
   );
